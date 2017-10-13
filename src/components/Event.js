@@ -5,8 +5,14 @@ import {bindActionCreators} from 'redux';
 const Event = (props) => {
   return (
     <tr>
-      <td className='center aligned'>
-        {props.title}
+      <td className='left aligned'>
+        {props.name}
+      </td>
+      <td className='left aligned'>
+        {props.energy}
+      </td>
+      <td className='left aligned'>
+        {props.type}
       </td>
     </tr>
   );

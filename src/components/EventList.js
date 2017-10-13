@@ -11,6 +11,7 @@ const EventList = (props) => {
       name={event.name}
       energy={event.energy}
       user={event.user}
+      type={event.type}
     />
   ));
 
@@ -28,7 +29,7 @@ const EventList = (props) => {
               <table className="ui blue right aligned table">
                 <thead>
                   <tr>
-                    <th className="center aligned">Name</th>
+                    <th className="left aligned">Name</th>
                     <th className="left aligned">Energy</th>
                     <th className="left aligned">Type</th>
                   </tr>
