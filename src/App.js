@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 
 class App extends Component {
   componentDidMount() {
-    fetchStuff(); // TODO: Hack
+    this.props.fetchStuff(this.props.userId); // TODO: Not sure exactly how this work, research it!
   }
 
   render() {
@@ -26,49 +26,29 @@ class App extends Component {
 }
 
 
-const fetchStuff = async () => {
-  let events = await fetch('http://localhost:6001/api/user/1/events');
-
-  console.log("Data = ", events);
-  // const events = [
-  //   {
-  //     "id": 0,
-  //     "name": "A event",
-  //     "type": "item",
-  //     "energy": 42,
-  //     "user": 1
-  //   },
-  //   {
-  //     "id": 1,
-  //     "name": "Another event",
-  //     "type": "item",
-  //     "energy": 43,
-  //     "user": 1
-  //   },
-  //   {
-  //     "id": 2,
-  //     "name": "A bite for usr 2",
-  //     "type": "item",
-  //     "energy": 21,
-  //     "user": 2
-  //   }
-  // ];
-  // return (dispatch) => {
-  //   dispatch({
-  //     type: 'READING_EVENTS'
-  //   });
-  //   setTimeout(() => dispatch({
-  //     type: 'READ_EVENTS',
-  //     events
-  //   }), 2000);
-  // }
+const fetchStuff = (userId) => {
+  return async (dispatch) => {
+    dispatch({
+      type: 'READING_EVENTS'
+    });
+    const events = await(await fetch(`http://localhost:6001/api/user/${userId}/events`)).json();
+    console.log("events = ", events);
+    dispatch({
+      type: 'READ_EVENTS',
+      events
+    });
+  }
 };
-const mapStateToProps = (state, ownProps) => (
-  state // TODO: Just passing on state here, does not seem correct
-);
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    userId: state.events.userId
+  }
+};
 
 export default connect(
   mapStateToProps,
   {
+    fetchStuff: fetchStuff
   }
 )(App);

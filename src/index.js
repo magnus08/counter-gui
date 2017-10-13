@@ -12,14 +12,14 @@ const reducer = combineReducers({
   events
 });
 
-function events(state = {events: [], initializing: false}, action) {
+function events(state = {events: [], initializing: false, userId: 1}, action) {
   console.log("action: ", action);
   if (action.type === 'READ_EVENTS') {
     console.log("ProjectReducer: READ_EVENTS", action);
     return {
       ...state,
       initializing: false,
-      events: action.events
+      events: action.events,
     };
   } else if (action.type === 'READING_EVENTS') {
     return {
@@ -29,19 +29,6 @@ function events(state = {events: [], initializing: false}, action) {
   } else {
     return state;
   }
-}
-
-function updateProp(xs, id, prop, updateFn, idProp = 'id') {
-  return xs.map((x) => {
-    if(id === x[idProp]) {
-      return {
-        ...x,
-        [prop]: updateFn(x)
-      }
-    } else {
-      return x;
-    }
-  });
 }
 
 const store = createStore(
