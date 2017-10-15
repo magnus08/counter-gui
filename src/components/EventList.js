@@ -1,5 +1,6 @@
 import React from 'react';
 import Event from './Event';
+import AddEvent from './AddEvent';
 import {connect} from 'react-redux'
 
 const EventList = (props) => {
@@ -19,9 +20,9 @@ const EventList = (props) => {
     <div>
       {
         props.initializing?
-          (
-            <h1>Loading...</h1>
-          )
+        (
+          <h1>Loading...</h1>
+        )
         :
         (
           <div className='ui one column relaxed grid'>
@@ -38,6 +39,9 @@ const EventList = (props) => {
                   {eventComponents}
                 </tbody>
               </table>
+              <AddEvent
+
+              />
             </div>
           </div>
         )
@@ -45,6 +49,20 @@ const EventList = (props) => {
     </div>
   )
 }
+
+const addNew = (userId) => {
+  return async (dispatch) => {
+    dispatch({
+      type: 'READING_EVENTS'
+    });
+    const events = await(await fetch(`http://localhost:6001/api/user/${userId}/events`)).json();
+    console.log("events = ", events);
+    dispatch({
+      type: 'READ_EVENTS',
+      events
+    });
+  }
+};
 
 const mapStateToProps = (state) => {
   const props = {
