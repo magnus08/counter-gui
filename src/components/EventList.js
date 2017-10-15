@@ -50,20 +50,6 @@ const EventList = (props) => {
   )
 }
 
-const addNew = (userId) => {
-  return async (dispatch) => {
-    dispatch({
-      type: 'READING_EVENTS'
-    });
-    const events = await(await fetch(`http://localhost:6001/api/user/${userId}/events`)).json();
-    console.log("events = ", events);
-    dispatch({
-      type: 'READ_EVENTS',
-      events
-    });
-  }
-};
-
 const mapStateToProps = (state) => {
   const props = {
     events: state.event.events,

@@ -2,9 +2,14 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
+
 const AddEvent = (props) => {
+  const handleAddEvent = () => {
+    props.doAdd(props.userId);
+  }
+
   return (
-    <button class="ui button">
+    <button className="ui button" onClick={handleAddEvent}>
       Add props.lol
     </button>
   );
@@ -16,34 +21,31 @@ const mapStateToProps = (state) => {
   };
 };
 
+const doAdd = (userId) => {
+  return async (dispatch) => {
+    const newEvent = {
+      userId,
+      name: "The new one",
+      type: "item",
+      energy: 17
+    }
+    const res = await(await fetch(`http://localhost:6001/api/user/${userId}/event`, {
+      method: 'post',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(newEvent)
+    })).json();
+    console.log("res = ", res);
+    dispatch({
+      type: 'ADD_EVENT',
+      event: res // Probably use res instead
+    });
+  }
+};
+
 const mapDispatchToProps = (dispatch) => {
-  // TODO: I have no clue why i need to use bindActionCreators here, it should just work with thunks
   return bindActionCreators({
-    // actionAutoDeploy: (id) => ({
-    //   type: 'TOGGLE_PROJECT_AUTODEPLOY',
-    //   id: id
-    // }),
-    // actionRedeploy: (id) => (dispatch) => {
-    //   dispatch({
-    //     type: 'TRIGGER_PROJECT_REDEPLOY',
-    //     id: id
-    //   });
-    //   return setTimeout(() => dispatch({
-    //     type: 'PROJECT_DEPLOY_DONE',
-    //     id: id
-    //   }), 2000)
-    // },
-    // actionRebuild: (id) => (dispatch) => {
-    //   dispatch({
-    //     type: 'TRIGGER_PROJECT_REBUILD',
-    //     id: id
-    //   });
-    //   return setTimeout(() => dispatch({
-    //     type: 'PROJECT_REBUILD_DONE',
-    //     id: id
-    //   }), 4000);
-    // }
-  }, dispatch)
+    doAdd: doAdd
+  }, dispatch);
 };
 
 export default connect(
