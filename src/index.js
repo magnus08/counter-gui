@@ -26,6 +26,14 @@ function event(state = {events: [], initializing: false, userId: 1}, action) {
       ...state,
       initializing: true
     };
+  } else if (action.type === 'ADD_EVENT') {
+    return {
+      ...state,
+      events: [
+        ...state.events,
+        action.event
+      ]
+    };
   } else {
     return state;
   }
