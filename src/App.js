@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 
 class App extends Component {
   componentDidMount() {
-    this.props.fetchStuff(this.props.userId); // TODO: Not sure exactly how this work, research it!
+    this.props.fetchStuff(this.props.userId);
   }
 
   render() {
@@ -25,7 +25,6 @@ class App extends Component {
   }
 }
 
-
 const fetchStuff = (userId) => {
   return async (dispatch) => {
     dispatch({
@@ -42,7 +41,7 @@ const fetchStuff = (userId) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    userId: state.events.userId
+    userId: state.event.userId
   }
 };
 

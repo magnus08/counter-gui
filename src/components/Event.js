@@ -19,10 +19,8 @@ const Event = (props) => {
 }
 
 const mapStateToProps = (state) => {
-  const events = state.events;
-  console.log("*** events state: ", state.events);
   return {
-    events,
+    userId: state.event.userId,
   };
 };
 

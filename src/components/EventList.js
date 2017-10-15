@@ -48,8 +48,9 @@ const EventList = (props) => {
 
 const mapStateToProps = (state) => {
   const props = {
-    events: state.events.events,
-    initializing: state.events.initializing
+    events: state.event.events,
+    initializing: state.event.initializing,
+    userId: state.event.userId,
   }
   console.log("*** ", props);
   return props;

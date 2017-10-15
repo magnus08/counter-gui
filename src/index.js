@@ -9,10 +9,10 @@ import App from './App'
 
 
 const reducer = combineReducers({
-  events
+  event
 });
 
-function events(state = {events: [], initializing: false, userId: 1}, action) {
+function event(state = {events: [], initializing: false, userId: 1}, action) {
   console.log("action: ", action);
   if (action.type === 'READ_EVENTS') {
     console.log("ProjectReducer: READ_EVENTS", action);
